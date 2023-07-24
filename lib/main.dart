@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,12 +12,33 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale("fa", "IR"),
+      ],
+      locale: const Locale("fa", "IR"),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo With Webneshin',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
-        textTheme: GoogleFonts.latoTextTheme(),
         useMaterial3: true,
+        primaryColor: Colors.pink.shade400,
+        brightness: Brightness.dark,
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.black),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 30, 30, 30),
+        textTheme: GoogleFonts.latoTextTheme(const TextTheme(
+          bodyMedium: TextStyle(fontSize: 16),
+          bodySmall: TextStyle(
+              fontSize: 13, color: Color.fromARGB(150, 255, 255, 255)),
+          titleMedium: TextStyle(fontWeight: FontWeight.bold),
+        )),
+        dividerTheme: const DividerThemeData(
+          indent: 5,
+          endIndent: 5,
+        )
       ),
       home: MyHomePage(),
     );
@@ -28,9 +50,9 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("data"),
+          title: Text("پروفایل کاربر"),
           actions: const [
-            Icon(Icons.chat),
+            Icon(Icons.chat_bubble_outline),
             SizedBox(width: 10),
             Icon(Icons.more_vert),
             SizedBox(width: 10),
@@ -53,32 +75,51 @@ class MyHomePage extends StatelessWidget {
                   const SizedBox(
                     width: 16,
                   ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("سجاد ابراهیمی "),
-                      SizedBox(
-                        height: 2,
-                      ),
-                      Text("data data data data data data "),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.location_pin),
-                          Text("Iran, Tehran")
-                        ],
-                      )
-                    ],
-                  )
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "سجاد ابراهیمی ",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        SizedBox(
+                          height: 2,
+                        ),
+                        Text("برنامه نویس بک اند و فلاتر"),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_pin,
+                              color:
+                                  Theme.of(context).textTheme.bodySmall!.color,
+                              size: 18,
+                            ),
+                            Text(
+                              "ایران، تهران",
+                              style: Theme.of(context).textTheme.bodySmall,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  Icon(Icons.favorite_border,
+                      color: Theme.of(context).primaryColor)
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(32, 0, 16, 32),
-              child: Text("jdfh glkjdhfgls jkdfg lkjdhfg dkjhv dcvn dcvb,a mdsb fv ,amndsf v,mansbd ,asdnmb ,mdnabv ,adsbf lahgfd laksjdf lkajs dfg lkajsdfg lkajhdg ladhgf lahjkd jahdgf kjahsd kv ,sc;lksadhf ;jhdfglkj dlfkgh lakjsdh laksjhdg lakjhfg lakjdg "),
-            )
+              padding: EdgeInsets.fromLTRB(32, 0, 16, 32),
+              child: Text(
+                "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+            const Divider(),
           ],
         ));
   }
