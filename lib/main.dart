@@ -41,17 +41,19 @@ class MainApp extends StatelessWidget {
             indent: 5,
             endIndent: 5,
           )),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("پروفایل کاربر"),
+          title: const Text("پروفایل کاربر"),
           actions: const [
             Icon(Icons.chat_bubble_outline),
             SizedBox(width: 10),
@@ -85,11 +87,11 @@ class MyHomePage extends StatelessWidget {
                           "سجاد ابراهیمی ",
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 2,
                         ),
-                        Text("برنامه نویس بک اند و فلاتر"),
-                        SizedBox(
+                        const Text("برنامه نویس بک اند و فلاتر"),
+                        const SizedBox(
                           height: 4,
                         ),
                         Row(
@@ -115,7 +117,7 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(32, 0, 16, 32),
+              padding: const EdgeInsets.fromLTRB(32, 0, 16, 32),
               child: Text(
                 "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.",
                 style: Theme.of(context).textTheme.bodySmall,
@@ -139,36 +141,80 @@ class MyHomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Center(
+            const Center(
               child: Wrap(
                 direction: Axis.horizontal,
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  Container(
-                    width: 110,
-                    height: 110,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).dividerTheme.color,
-                        borderRadius: BorderRadius.all(Radius.circular(12))
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "assets/images/icons8-adobe-dreamweaver-144.png",
-                          width: 40,
-                          height: 40,
-                        ),
-                        Text("Dreamweaver")
-                      ],
-                    ),
+                  Skill(
+                    title: "دریم ایور",
+                    imagePath: 'assets/images/icons8-adobe-dreamweaver-144.png',
+                    shadowColor: Colors.lightGreen, isActive: true,
                   ),
-
+                  Skill(
+                    title: "فایرورک",
+                    imagePath: 'assets/images/icons8-adobe-fireworks-144.png',
+                    shadowColor: Colors.yellow, isActive: false,
+                  ),
+                  Skill(
+                    title: "ایندیزاین",
+                    imagePath: 'assets/images/icons8-adobe-indesign-144.png',
+                    shadowColor: Colors.redAccent, isActive: false,
+                  ),
+                  Skill(
+                    title: "مدیا انکودر",
+                    imagePath: 'assets/images/icons8-adobe-media-encoder-144.png',
+                    shadowColor: Colors.deepPurple, isActive: false,
+                  ),
+                  Skill(
+                    title: "ایکس دی",
+                    imagePath: 'assets/images/icons8-adobe-xd-144.png',
+                    shadowColor: Colors.deepPurpleAccent, isActive: false,
+                  ),
                 ],
               ),
             )
           ],
         ));
+  }
+}
+
+class Skill extends StatelessWidget {
+  final String title;
+  final String imagePath;
+  final Color shadowColor;
+  final bool isActive;
+
+  const Skill({
+    super.key,
+    required this.title,
+    required this.imagePath,
+    required this.shadowColor,
+    required this.isActive,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 110,
+      height: 110,
+      decoration: isActive
+          ? BoxDecoration(
+              color: Theme.of(context).dividerTheme.color,
+              borderRadius: const BorderRadius.all(Radius.circular(12)))
+          : null,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            imagePath,
+            width: 40,
+            height: 40,
+          ),
+          Text(title)
+        ],
+      ),
+    );
   }
 }
