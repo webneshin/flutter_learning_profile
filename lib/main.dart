@@ -133,10 +133,17 @@ enum _SkillType { none, dreamweaver, fireworks, indesign, mediaEncoder, xd }
 
 class _MyHomePageState extends State<MyHomePage> {
   _SkillType _skill_type = _SkillType.none;
+  bool _password_show = false;
 
   void updateSelectedSkill(_SkillType skillType) {
     setState(() {
       _skill_type = skillType;
+    });
+  }
+
+  void togglePasswordShow(){
+    setState(() {
+      _password_show = !_password_show;
     });
   }
 
@@ -319,8 +326,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       SizedBox(height: 12),
                       TextField(
+                        obscureText: !_password_show,
                         decoration: InputDecoration(
                             labelText: 'رمز عبور',
+                            suffixIcon: InkWell(
+                              onTap:() {
+                                togglePasswordShow();
+                              },
+                                child: Icon(Icons.remove_red_eye_outlined)
+                            ),
                             prefixIcon: Icon(Icons.password)),
                       ),
                       SizedBox(
