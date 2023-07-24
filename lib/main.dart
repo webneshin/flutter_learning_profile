@@ -11,6 +11,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color surfaceColor = Colors.white10;
     return MaterialApp(
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
@@ -24,22 +25,22 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo With Webneshin',
       theme: ThemeData(
-        useMaterial3: true,
-        primaryColor: Colors.pink.shade400,
-        brightness: Brightness.dark,
-        appBarTheme: const AppBarTheme(backgroundColor: Colors.black),
-        scaffoldBackgroundColor: const Color.fromARGB(255, 30, 30, 30),
-        textTheme: GoogleFonts.latoTextTheme(const TextTheme(
-          bodyMedium: TextStyle(fontSize: 16),
-          bodySmall: TextStyle(
-              fontSize: 13, color: Color.fromARGB(150, 255, 255, 255)),
-          titleMedium: TextStyle(fontWeight: FontWeight.bold),
-        )),
-        dividerTheme: const DividerThemeData(
-          indent: 5,
-          endIndent: 5,
-        )
-      ),
+          useMaterial3: true,
+          primaryColor: Colors.pink.shade400,
+          brightness: Brightness.dark,
+          appBarTheme: const AppBarTheme(backgroundColor: Colors.black),
+          scaffoldBackgroundColor: const Color.fromARGB(255, 30, 30, 30),
+          textTheme: GoogleFonts.latoTextTheme(const TextTheme(
+            bodyMedium: TextStyle(fontSize: 16),
+            bodySmall: TextStyle(
+                fontSize: 13, color: Color.fromARGB(150, 255, 255, 255)),
+            titleMedium: TextStyle(fontWeight: FontWeight.bold),
+          )),
+          dividerTheme: DividerThemeData(
+            color: surfaceColor,
+            indent: 5,
+            endIndent: 5,
+          )),
       home: MyHomePage(),
     );
   }
@@ -59,6 +60,7 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.all(32),
@@ -120,6 +122,52 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
             const Divider(),
+            const Padding(
+              padding: EdgeInsets.all(32),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("مهارت ها",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.arrow_drop_down,
+                    size: 15,
+                  )
+                ],
+              ),
+            ),
+            Center(
+              child: Wrap(
+                direction: Axis.horizontal,
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  Container(
+                    width: 110,
+                    height: 110,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).dividerTheme.color,
+                        borderRadius: BorderRadius.all(Radius.circular(12))
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/icons8-adobe-dreamweaver-144.png",
+                          width: 40,
+                          height: 40,
+                        ),
+                        Text("Dreamweaver")
+                      ],
+                    ),
+                  ),
+
+                ],
+              ),
+            )
           ],
         ));
   }
