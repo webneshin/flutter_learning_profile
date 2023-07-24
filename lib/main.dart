@@ -6,12 +6,19 @@ void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
   @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  ThemeMode themeMode = ThemeMode.dark;
+
+  @override
   Widget build(BuildContext context) {
-    Color surfaceColor = Colors.white10;
+    // Color surfaceColor = Colors.white10;
     return MaterialApp(
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
@@ -24,40 +31,94 @@ class MainApp extends StatelessWidget {
       locale: const Locale("fa", "IR"),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo With Webneshin',
-      theme: ThemeData(
-          useMaterial3: true,
-          primaryColor: Colors.pink.shade400,
-          brightness: Brightness.dark,
-          appBarTheme: const AppBarTheme(backgroundColor: Colors.black),
-          scaffoldBackgroundColor: const Color.fromARGB(255, 30, 30, 30),
-          textTheme: GoogleFonts.latoTextTheme(const TextTheme(
-            bodyMedium: TextStyle(fontSize: 16),
-            bodySmall: TextStyle(
-                fontSize: 13, color: Color.fromARGB(150, 255, 255, 255)),
-            titleMedium: TextStyle(fontWeight: FontWeight.bold),
-          )),
-          inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide.none),
-            filled: true,
-            fillColor: surfaceColor,
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.pink.shade400))
-          ),
-          dividerTheme: DividerThemeData(
-            color: surfaceColor,
-            indent: 5,
-            endIndent: 5,
-          )),
-      home: const MyHomePage(),
+      theme: themeMode == ThemeMode.dark
+          ? MyAppThemeConfig.dark().getTheme()
+          : MyAppThemeConfig.light().getTheme(),
+      home: MyHomePage(
+        toggleThemeMode: () {
+          setState(() {
+            if (themeMode == ThemeMode.dark) {
+              themeMode = ThemeMode.light;
+            } else {
+              themeMode = ThemeMode.dark;
+            }
+          });
+        },
+      ),
     );
   }
 }
 
+class MyAppThemeConfig {
+  final Color primaryColor = Colors.pink.shade400;
+  final Color primaryTextColor;
+  final Color secondaryTextColor;
+  final Color surfaceColor;
+  final Color backgroundColor;
+  final Color appBarColor;
+  final Brightness brightness;
+
+  MyAppThemeConfig({
+    required this.primaryTextColor,
+    required this.secondaryTextColor,
+    required this.surfaceColor,
+    required this.backgroundColor,
+    required this.appBarColor,
+    required this.brightness,
+  });
+
+  MyAppThemeConfig.dark()
+      : primaryTextColor = Colors.white,
+        secondaryTextColor = Colors.white70,
+        surfaceColor = Colors.white10,
+        backgroundColor = Color.fromARGB(255, 30, 30, 30),
+        appBarColor = Colors.black,
+        brightness = Brightness.dark;
+
+  MyAppThemeConfig.light()
+      : primaryTextColor = Colors.grey.shade900,
+        secondaryTextColor = Colors.grey.shade900,
+        surfaceColor = Colors.black12,
+        backgroundColor = Colors.white,
+        appBarColor = Colors.white60,
+        brightness = Brightness.light;
+
+  ThemeData getTheme() {
+    return ThemeData(
+        useMaterial3: true,
+        primaryColor: primaryColor,
+        brightness: brightness,
+        appBarTheme: AppBarTheme(backgroundColor: appBarColor),
+        scaffoldBackgroundColor: backgroundColor,
+        textTheme: GoogleFonts.latoTextTheme(TextTheme(
+          bodyMedium: TextStyle(fontSize: 16, color: primaryTextColor),
+          bodySmall: TextStyle(fontSize: 13, color: secondaryTextColor),
+          titleMedium:
+              TextStyle(fontWeight: FontWeight.bold, color: primaryTextColor),
+        )),
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none),
+          filled: true,
+          fillColor: surfaceColor,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(Colors.pink.shade400))),
+        dividerTheme: DividerThemeData(
+          color: surfaceColor,
+          indent: 5,
+          endIndent: 5,
+        ));
+  }
+}
+
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  final Function() toggleThemeMode;
+
+  const MyHomePage({super.key, required this.toggleThemeMode});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -79,11 +140,14 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("پروفایل کاربر"),
-          actions: const [
-            Icon(Icons.chat_bubble_outline),
-            SizedBox(width: 10),
-            Icon(Icons.more_vert),
-            SizedBox(width: 10),
+          actions: [
+            InkWell(
+                onTap: widget.toggleThemeMode, child: Icon(Icons.dark_mode)),
+            const SizedBox(width: 10),
+            const Icon(Icons.chat_bubble_outline),
+            const SizedBox(width: 10),
+            const Icon(Icons.more_vert),
+            const SizedBox(width: 10),
           ],
         ),
         body: SingleChildScrollView(
