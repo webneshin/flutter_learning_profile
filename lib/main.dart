@@ -46,8 +46,23 @@ class MainApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+enum _SkillType { dreamweaver, fireworks, indesign, mediaEncoder, xd }
+
+class _MyHomePageState extends State<MyHomePage> {
+  _SkillType _skill_type = _SkillType.mediaEncoder;
+
+  void updateSelectedSkill(_SkillType skillType) {
+    setState(() {
+      _skill_type = skillType;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +156,7 @@ class MyHomePage extends StatelessWidget {
                 ],
               ),
             ),
-            const Center(
+            Center(
               child: Wrap(
                 direction: Axis.horizontal,
                 spacing: 8,
@@ -150,27 +165,53 @@ class MyHomePage extends StatelessWidget {
                   Skill(
                     title: "دریم ایور",
                     imagePath: 'assets/images/icons8-adobe-dreamweaver-144.png',
-                    shadowColor: Colors.lightGreen, isActive: true,
+                    shadowColor: Colors.lightGreen,
+                    isActive: _skill_type == _SkillType.dreamweaver,
+                    type: _SkillType.dreamweaver,
+                    onTap: () {
+                      updateSelectedSkill(_SkillType.dreamweaver);
+                    },
                   ),
                   Skill(
                     title: "فایرورک",
                     imagePath: 'assets/images/icons8-adobe-fireworks-144.png',
-                    shadowColor: Colors.yellow, isActive: false,
+                    shadowColor: Colors.yellow,
+                    isActive: _skill_type == _SkillType.fireworks,
+                    type: _SkillType.fireworks,
+                    onTap: () {
+                      updateSelectedSkill(_SkillType.fireworks);
+                    },
                   ),
                   Skill(
                     title: "ایندیزاین",
                     imagePath: 'assets/images/icons8-adobe-indesign-144.png',
-                    shadowColor: Colors.redAccent, isActive: false,
+                    shadowColor: Colors.redAccent,
+                    isActive: _skill_type == _SkillType.indesign,
+                    type: _SkillType.indesign,
+                    onTap: () {
+                      updateSelectedSkill(_SkillType.indesign);
+                    },
                   ),
                   Skill(
                     title: "مدیا انکودر",
-                    imagePath: 'assets/images/icons8-adobe-media-encoder-144.png',
-                    shadowColor: Colors.deepPurple, isActive: false,
+                    imagePath:
+                        'assets/images/icons8-adobe-media-encoder-144.png',
+                    shadowColor: Colors.deepPurple,
+                    isActive: _skill_type == _SkillType.mediaEncoder,
+                    type: _SkillType.mediaEncoder,
+                    onTap: () {
+                      updateSelectedSkill(_SkillType.mediaEncoder);
+                    },
                   ),
                   Skill(
                     title: "ایکس دی",
                     imagePath: 'assets/images/icons8-adobe-xd-144.png',
-                    shadowColor: Colors.deepPurpleAccent, isActive: false,
+                    shadowColor: Colors.deepPurpleAccent,
+                    isActive: _skill_type == _SkillType.xd,
+                    type: _SkillType.xd,
+                    onTap: () {
+                      updateSelectedSkill(_SkillType.xd);
+                    },
                   ),
                 ],
               ),
@@ -185,6 +226,8 @@ class Skill extends StatelessWidget {
   final String imagePath;
   final Color shadowColor;
   final bool isActive;
+  final _SkillType type;
+  final Function() onTap;
 
   const Skill({
     super.key,
@@ -192,28 +235,42 @@ class Skill extends StatelessWidget {
     required this.imagePath,
     required this.shadowColor,
     required this.isActive,
+    required this.type,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 110,
-      height: 110,
-      decoration: isActive
-          ? BoxDecoration(
-              color: Theme.of(context).dividerTheme.color,
-              borderRadius: const BorderRadius.all(Radius.circular(12)))
-          : null,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            imagePath,
-            width: 40,
-            height: 40,
-          ),
-          Text(title)
-        ],
+    final BorderRadius defaultBorderRadius = BorderRadius.circular(12);
+    return InkWell(
+      borderRadius: defaultBorderRadius,
+      onTap: onTap,
+      child: Container(
+        width: 110,
+        height: 110,
+        decoration: isActive
+            ? BoxDecoration(
+                color: Theme.of(context).dividerTheme.color,
+                borderRadius: defaultBorderRadius,
+              )
+            : null,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              decoration: isActive? BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(color: shadowColor.withOpacity(0.3), blurRadius: 10,)
+                  ]):null,
+              child: Image.asset(
+                imagePath,
+                width: 40,
+                height: 40,
+              ),
+            ),
+            Text(title)
+          ],
+        ),
       ),
     );
   }
