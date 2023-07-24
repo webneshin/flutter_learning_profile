@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MainApp());
@@ -14,6 +15,7 @@ class MainApp extends StatelessWidget {
       title: 'Flutter Demo With Webneshin',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
+        textTheme: GoogleFonts.latoTextTheme(),
         useMaterial3: true,
       ),
       home: MyHomePage(),
@@ -54,7 +56,7 @@ class MyHomePage extends StatelessWidget {
                   const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("data data data data "),
+                      Text("سجاد ابراهیمی "),
                       SizedBox(
                         height: 2,
                       ),
