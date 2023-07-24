@@ -44,6 +44,9 @@ class _MainAppState extends State<MainApp> {
             }
           });
         },
+        getThemeMode: () {
+          return themeMode;
+        },
       ),
     );
   }
@@ -117,8 +120,10 @@ class MyAppThemeConfig {
 
 class MyHomePage extends StatefulWidget {
   final Function() toggleThemeMode;
+  final Function() getThemeMode;
 
-  const MyHomePage({super.key, required this.toggleThemeMode});
+  const MyHomePage(
+      {super.key, required this.toggleThemeMode, required this.getThemeMode});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -142,7 +147,10 @@ class _MyHomePageState extends State<MyHomePage> {
           title: const Text("پروفایل کاربر"),
           actions: [
             InkWell(
-                onTap: widget.toggleThemeMode, child: Icon(Icons.dark_mode)),
+                onTap: widget.toggleThemeMode,
+                child: Icon(widget.getThemeMode() == ThemeMode.light
+                    ? Icons.dark_mode
+                    : Icons.light_mode)),
             const SizedBox(width: 10),
             const Icon(Icons.chat_bubble_outline),
             const SizedBox(width: 10),
