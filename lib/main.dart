@@ -260,7 +260,7 @@ class Skill extends StatelessWidget {
             Container(
               decoration: isActive? BoxDecoration(
                   boxShadow: [
-                    BoxShadow(color: shadowColor.withOpacity(0.3), blurRadius: 10,)
+                    BoxShadow(color: shadowColor.withOpacity(0.5), blurRadius: 10,)
                   ]):null,
               child: Image.asset(
                 imagePath,
