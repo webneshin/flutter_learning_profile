@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(const MainApp());
@@ -20,15 +21,18 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     // Color surfaceColor = Colors.white10;
     return MaterialApp(
-      // localizationsDelegates: const [
-      //   GlobalCupertinoLocalizations.delegate,
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      // ],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       // supportedLocales: const [
-      //   Locale("fa", "IR"),
+      //   Locale("fa"),
+      //   Locale("en"),
       // ],
-      // locale: const Locale("fa", "IR"),
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale("fa", "IR"),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo With Webneshin',
       theme: themeMode == ThemeMode.dark
@@ -129,8 +133,6 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-enum _SkillType { none, dreamweaver, fireworks, indesign, mediaEncoder, xd }
-
 class _MyHomePageState extends State<MyHomePage> {
   _SkillType _skill_type = _SkillType.none;
   bool _password_show = false;
@@ -149,9 +151,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _translate =  AppLocalizations.of(context)! ;
+
     return Scaffold(
         appBar: AppBar(
-          title: const Text("User Profile"),
+          title: Text(_translate.userProfile),
           actions: [
             InkWell(
                 onTap: widget.toggleThemeMode,
@@ -190,13 +194,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Sajjad Ebrahimi",
+                            _translate.name,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           const SizedBox(
                             height: 2,
                           ),
-                          const Text("Backend Developer @ Otoban"),
+                          Text(_translate.job),
                           const SizedBox(
                             height: 4,
                           ),
@@ -211,7 +215,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 size: 18,
                               ),
                               Text(
-                                "Tehran, Iran",
+                                _translate.location,
                                 style: Theme.of(context).textTheme.bodySmall,
                               )
                             ],
@@ -228,22 +232,22 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.fromLTRB(32, 0, 16, 32),
                 child: Text(
                   // "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.",
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+                  _translate.summery,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
               const Divider(),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(32),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Skills",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(
+                    Text(_translate.skills,
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(
                       width: 5,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_drop_down,
                       size: 15,
                     )
@@ -317,7 +321,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("User Infoemations",
+                      Text(_translate.userInformation,
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 12),
                       TextField(
@@ -412,3 +416,5 @@ class Skill extends StatelessWidget {
     );
   }
 }
+
+enum _SkillType { none, dreamweaver, fireworks, indesign, mediaEncoder, xd }
