@@ -8,5 +8,8 @@
   "userInformation": "User Information",
   "email": "Email",
   "password": "Password",
-  "save": "Save"
+  "save": "Save",
+  "selectedLanguage": "Selected Language",
+  "enLanguage": "English",
+  "faLanguage": "فارسی"
 }

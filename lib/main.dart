@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -16,6 +17,7 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   ThemeMode themeMode = ThemeMode.dark;
+  Locale _locale = Locale("fa");
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +34,12 @@ class _MainAppState extends State<MainApp> {
       //   Locale("en"),
       // ],
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: const Locale("fa", "IR"),
+      locale: _locale,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo With Webneshin',
       theme: themeMode == ThemeMode.dark
-          ? MyAppThemeConfig.dark().getTheme('fa')
-          : MyAppThemeConfig.light().getTheme('fa'),
+          ? MyAppThemeConfig.dark().getTheme(_locale.languageCode)
+          : MyAppThemeConfig.light().getTheme(_locale.languageCode),
       home: MyHomePage(
         toggleThemeMode: () {
           setState(() {
@@ -94,12 +96,12 @@ class MyAppThemeConfig {
   ThemeData getTheme(String languageCode) {
     return ThemeData(
         useMaterial3: true,
-        fontFamily:languageCode=="fa"?faFontFamily:"",
+        fontFamily: languageCode == "fa" ? faFontFamily : "",
         primaryColor: primaryColor,
         brightness: brightness,
         appBarTheme: AppBarTheme(backgroundColor: appBarColor),
         scaffoldBackgroundColor: backgroundColor,
-        textTheme: languageCode=='en'?enTextTheme:faTextTheme,
+        textTheme: languageCode == 'en' ? enTextTheme : faTextTheme,
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -249,6 +251,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   // "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.",
                   _translate.summery,
                   style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(32, 12, 32, 12),
+                child: Row(
+                  children: [
+                    Text(_translate.selectedLanguage),
+                    CupertinoSlidingSegmentedControl(children: children, onValueChanged: onValueChanged)
+                  ],
                 ),
               ),
               const Divider(),
@@ -432,3 +444,5 @@ class Skill extends StatelessWidget {
 }
 
 enum _SkillType { none, dreamweaver, fireworks, indesign, mediaEncoder, xd }
+
+enum _Language {en,fa}

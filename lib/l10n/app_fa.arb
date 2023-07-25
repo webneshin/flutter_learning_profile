@@ -8,5 +8,8 @@
   "userInformation": "اطلاعات کاربر",
   "email": "ایمیل",
   "password": "رمز عبور",
-  "save": "ذخیره"
+  "save": "ذخیره",
+  "selectedLanguage": "انتخاب زبان",
+  "enLanguage": "English",
+  "faLanguage": "فارسی"
 }
