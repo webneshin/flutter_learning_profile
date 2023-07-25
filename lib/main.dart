@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(const MainApp());
@@ -20,15 +20,15 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     // Color surfaceColor = Colors.white10;
     return MaterialApp(
-      localizationsDelegates: const [
-        GlobalCupertinoLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale("fa", "IR"),
-      ],
-      locale: const Locale("fa", "IR"),
+      // localizationsDelegates: const [
+      //   GlobalCupertinoLocalizations.delegate,
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      // ],
+      // supportedLocales: const [
+      //   Locale("fa", "IR"),
+      // ],
+      // locale: const Locale("fa", "IR"),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo With Webneshin',
       theme: themeMode == ThemeMode.dark
@@ -151,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("پروفایل کاربر"),
+          title: const Text("User Profile"),
           actions: [
             InkWell(
                 onTap: widget.toggleThemeMode,
@@ -190,13 +190,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "سجاد ابراهیمی ",
+                            "Sajjad Ebrahimi",
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           const SizedBox(
                             height: 2,
                           ),
-                          const Text("برنامه نویس بک اند و فلاتر"),
+                          const Text("Backend Developer @ Otoban"),
                           const SizedBox(
                             height: 4,
                           ),
@@ -211,7 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 size: 18,
                               ),
                               Text(
-                                "ایران، تهران",
+                                "Tehran, Iran",
                                 style: Theme.of(context).textTheme.bodySmall,
                               )
                             ],
@@ -227,7 +227,8 @@ class _MyHomePageState extends State<MyHomePage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(32, 0, 16, 32),
                 child: Text(
-                  "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.",
+                  // "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.",
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -237,7 +238,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("مهارت ها",
+                    Text("Skills",
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     SizedBox(
                       width: 5,
@@ -256,7 +257,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   runSpacing: 8,
                   children: [
                     Skill(
-                      title: "دریم ایور",
+                      title: "Dreamweaver",
                       imagePath:
                           'assets/images/icons8-adobe-dreamweaver-144.png',
                       shadowColor: Colors.lightGreen,
@@ -267,7 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                     ),
                     Skill(
-                      title: "فایرورک",
+                      title: "Fireworks",
                       imagePath: 'assets/images/icons8-adobe-fireworks-144.png',
                       shadowColor: Colors.yellow,
                       isActive: _skill_type == _SkillType.fireworks,
@@ -277,7 +278,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                     ),
                     Skill(
-                      title: "ایندیزاین",
+                      title: "Indesign",
                       imagePath: 'assets/images/icons8-adobe-indesign-144.png',
                       shadowColor: Colors.redAccent,
                       isActive: _skill_type == _SkillType.indesign,
@@ -287,7 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                     ),
                     Skill(
-                      title: "مدیا انکودر",
+                      title: "Media Encoder",
                       imagePath:
                           'assets/images/icons8-adobe-media-encoder-144.png',
                       shadowColor: Colors.deepPurple,
@@ -298,7 +299,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                     ),
                     Skill(
-                      title: "ایکس دی",
+                      title: "XD",
                       imagePath: 'assets/images/icons8-adobe-xd-144.png',
                       shadowColor: Colors.deepPurpleAccent,
                       isActive: _skill_type == _SkillType.xd,
@@ -316,19 +317,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("اطلاعات ورود",
+                      Text("User Infoemations",
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 12),
                       TextField(
                         decoration: InputDecoration(
-                            labelText: 'ایمیل',
+                            labelText: 'Email',
                             prefixIcon: Icon(Icons.alternate_email)),
                       ),
                       SizedBox(height: 12),
                       TextField(
                         obscureText: !_password_show,
                         decoration: InputDecoration(
-                            labelText: 'رمز عبور',
+                            labelText: 'Password',
                             suffixIcon: InkWell(
                               onTap:() {
                                 togglePasswordShow();
@@ -344,7 +345,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           width: double.infinity,
                           height: 48,
                           child: ElevatedButton(
-                              onPressed: () {}, child: Text("ذخیره")))
+                              onPressed: () {}, child: Text("Save")))
                     ],
                   )),
             ],
