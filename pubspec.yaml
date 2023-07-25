@@ -24,3 +24,10 @@ flutter:
   assets:
     - assets/images/
   generate: true
+  fonts:
+    - family: iranyekan
+      fonts:
+        - asset: "assets/fonts/IRANYekanMobileMedium.ttf"
+          weight: 700
+        - asset: "assets/fonts/IRANYekanMobileRegular.ttf"
+

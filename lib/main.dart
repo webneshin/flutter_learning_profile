@@ -36,8 +36,8 @@ class _MainAppState extends State<MainApp> {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo With Webneshin',
       theme: themeMode == ThemeMode.dark
-          ? MyAppThemeConfig.dark().getTheme()
-          : MyAppThemeConfig.light().getTheme(),
+          ? MyAppThemeConfig.dark().getTheme('fa')
+          : MyAppThemeConfig.light().getTheme('fa'),
       home: MyHomePage(
         toggleThemeMode: () {
           setState(() {
@@ -57,6 +57,7 @@ class _MainAppState extends State<MainApp> {
 }
 
 class MyAppThemeConfig {
+  static const faFontFamily = "iranyekan";
   final Color primaryColor = Colors.pink.shade400;
   final Color primaryTextColor;
   final Color secondaryTextColor;
@@ -90,19 +91,15 @@ class MyAppThemeConfig {
         appBarColor = Colors.white60,
         brightness = Brightness.light;
 
-  ThemeData getTheme() {
+  ThemeData getTheme(String languageCode) {
     return ThemeData(
         useMaterial3: true,
+        fontFamily:languageCode=="fa"?faFontFamily:"",
         primaryColor: primaryColor,
         brightness: brightness,
         appBarTheme: AppBarTheme(backgroundColor: appBarColor),
         scaffoldBackgroundColor: backgroundColor,
-        textTheme: GoogleFonts.latoTextTheme(TextTheme(
-          bodyMedium: TextStyle(fontSize: 16, color: primaryTextColor),
-          bodySmall: TextStyle(fontSize: 13, color: secondaryTextColor),
-          titleMedium:
-              TextStyle(fontWeight: FontWeight.bold, color: primaryTextColor),
-        )),
+        textTheme: languageCode=='en'?enTextTheme:faTextTheme,
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -120,6 +117,24 @@ class MyAppThemeConfig {
           endIndent: 5,
         ));
   }
+
+  TextTheme get enTextTheme => GoogleFonts.latoTextTheme(TextTheme(
+        bodyMedium: TextStyle(fontSize: 16, color: primaryTextColor),
+        bodySmall: TextStyle(fontSize: 13, color: secondaryTextColor),
+        titleMedium:
+            TextStyle(fontWeight: FontWeight.bold, color: primaryTextColor),
+      ));
+
+  TextTheme get faTextTheme => TextTheme(
+        bodyMedium: TextStyle(
+            fontSize: 16, color: primaryTextColor, fontFamily: faFontFamily),
+        bodySmall: TextStyle(
+            fontSize: 13, color: secondaryTextColor, fontFamily: faFontFamily),
+        titleMedium: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: primaryTextColor,
+            fontFamily: faFontFamily),
+      );
 }
 
 class MyHomePage extends StatefulWidget {
@@ -143,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void togglePasswordShow(){
+  void togglePasswordShow() {
     setState(() {
       _password_show = !_password_show;
     });
@@ -151,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final _translate =  AppLocalizations.of(context)! ;
+    final _translate = AppLocalizations.of(context)!;
 
     return Scaffold(
         appBar: AppBar(
@@ -326,20 +341,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       SizedBox(height: 12),
                       TextField(
                         decoration: InputDecoration(
-                            labelText: 'Email',
+                            labelText: _translate.email,
                             prefixIcon: Icon(Icons.alternate_email)),
                       ),
                       SizedBox(height: 12),
                       TextField(
                         obscureText: !_password_show,
                         decoration: InputDecoration(
-                            labelText: 'Password',
+                            labelText: _translate.password,
                             suffixIcon: InkWell(
-                              onTap:() {
-                                togglePasswordShow();
-                              },
-                                child: Icon(Icons.remove_red_eye_outlined)
-                            ),
+                                onTap: () {
+                                  togglePasswordShow();
+                                },
+                                child: Icon(Icons.remove_red_eye_outlined)),
                             prefixIcon: Icon(Icons.password)),
                       ),
                       SizedBox(
@@ -349,7 +363,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           width: double.infinity,
                           height: 48,
                           child: ElevatedButton(
-                              onPressed: () {}, child: Text("Save")))
+                              onPressed: () {}, child: Text(_translate.save)))
                     ],
                   )),
             ],
