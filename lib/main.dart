@@ -53,6 +53,13 @@ class _MainAppState extends State<MainApp> {
         getThemeMode: () {
           return themeMode;
         },
+        selectedLanguageChanged: (_Language newSelectedLanguageByUser) {
+          setState(() {
+            _locale = newSelectedLanguageByUser == _Language.en
+                ? Locale("en")
+                : Locale("fa");
+          });
+        },
       ),
     );
   }
@@ -142,9 +149,13 @@ class MyAppThemeConfig {
 class MyHomePage extends StatefulWidget {
   final Function() toggleThemeMode;
   final Function() getThemeMode;
+  final Function(_Language _language) selectedLanguageChanged;
 
   const MyHomePage(
-      {super.key, required this.toggleThemeMode, required this.getThemeMode});
+      {super.key,
+      required this.toggleThemeMode,
+      required this.getThemeMode,
+      required this.selectedLanguageChanged});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -153,11 +164,21 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   _SkillType _skill_type = _SkillType.none;
   bool _password_show = false;
+  _Language _language = _Language.fa;
 
-  void updateSelectedSkill(_SkillType skillType) {
+  void _updateSelectedSkill(_SkillType skillType) {
     setState(() {
       _skill_type = skillType;
     });
+  }
+
+  void _updateSelectedLanguage(_Language? language) {
+    if (language != null) {
+      widget.selectedLanguageChanged(language);
+      setState(() {
+        _language = language;
+      });
+    }
   }
 
   void togglePasswordShow() {
@@ -257,9 +278,18 @@ class _MyHomePageState extends State<MyHomePage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(32, 12, 32, 12),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(_translate.selectedLanguage),
-                    CupertinoSlidingSegmentedControl(children: children, onValueChanged: onValueChanged)
+                    CupertinoSlidingSegmentedControl<_Language>(
+                      groupValue: _language,
+                      thumbColor: Theme.of(context).primaryColor,
+                      children: {
+                        _Language.en: Text(_translate.enLanguage),
+                        _Language.fa: Text(_translate.faLanguage),
+                      },
+                      onValueChanged: (value) => _updateSelectedLanguage(value),
+                    )
                   ],
                 ),
               ),
@@ -295,7 +325,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       isActive: _skill_type == _SkillType.dreamweaver,
                       type: _SkillType.dreamweaver,
                       onTap: () {
-                        updateSelectedSkill(_SkillType.dreamweaver);
+                        _updateSelectedSkill(_SkillType.dreamweaver);
                       },
                     ),
                     Skill(
@@ -305,7 +335,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       isActive: _skill_type == _SkillType.fireworks,
                       type: _SkillType.fireworks,
                       onTap: () {
-                        updateSelectedSkill(_SkillType.fireworks);
+                        _updateSelectedSkill(_SkillType.fireworks);
                       },
                     ),
                     Skill(
@@ -315,7 +345,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       isActive: _skill_type == _SkillType.indesign,
                       type: _SkillType.indesign,
                       onTap: () {
-                        updateSelectedSkill(_SkillType.indesign);
+                        _updateSelectedSkill(_SkillType.indesign);
                       },
                     ),
                     Skill(
@@ -326,7 +356,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       isActive: _skill_type == _SkillType.mediaEncoder,
                       type: _SkillType.mediaEncoder,
                       onTap: () {
-                        updateSelectedSkill(_SkillType.mediaEncoder);
+                        _updateSelectedSkill(_SkillType.mediaEncoder);
                       },
                     ),
                     Skill(
@@ -336,7 +366,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       isActive: _skill_type == _SkillType.xd,
                       type: _SkillType.xd,
                       onTap: () {
-                        updateSelectedSkill(_SkillType.xd);
+                        _updateSelectedSkill(_SkillType.xd);
                       },
                     ),
                   ],
@@ -445,4 +475,4 @@ class Skill extends StatelessWidget {
 
 enum _SkillType { none, dreamweaver, fireworks, indesign, mediaEncoder, xd }
 
-enum _Language {en,fa}
+enum _Language { en, fa }
